@@ -129,4 +129,4 @@ Apache License 2.0 - see [LICENSE](LICENSE) for details.
 
 ## Credits
 
-Inspired by [Anton Babenko&#39;s terraform-skill](https://github.com/antonbabenko/terraform-skill).
+The [opentofu-skills](.opencode/skills/opentofu-skills/SKILL.md) is inspired by [Anton Babenko's terraform-skill](https://github.com/antonbabenko/terraform-skill).
