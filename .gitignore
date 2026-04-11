@@ -1,0 +1,48 @@
+# macOS
+$(brew --prefix)/opt/opencode/bin/opencode
+
+# IntelliJ IDEA
+.idea/
+
+# VS Code
+.vscode/
+
+# Emacs
+*~
+
+# Vim
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# AWS credentials
+*.aws credentials
+aws_credentials*
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# OpenTofu
+.tofu/
+.tofu.lock.hcl
+
+# Logs
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
