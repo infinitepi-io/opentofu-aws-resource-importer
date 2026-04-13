@@ -5,7 +5,8 @@ set -euo pipefail
 REPO_URL="https://github.com/infinitepi-io/opentofu-aws-resource-importer.git"
 BRANCH="main"
 PROJECT_DIR="$(pwd)"
-SUBMODULE_DIR="${PROJECT_DIR}/.opencode-repo"
+SUBMODULE_NAME=".opencode-repo"
+SUBMODULE_DIR="${PROJECT_DIR}/${SUBMODULE_NAME}"
 
 echo "🔧 Installing opentofu-aws-resource-importer (submodule)..."
 echo ""
@@ -17,66 +18,70 @@ echo "   Project dir : ${PROJECT_DIR}"
 echo "   Submodule   : ${SUBMODULE_DIR}"
 echo ""
 
-# ── Ensure this is a git repo ────────────────────────────────────────────────
+# ── Ensure git repo ──────────────────────────────────────────────────────────
 if [ ! -d "${PROJECT_DIR}/.git" ]; then
-  echo "❌ This is not a git repository. Initialize git first:"
-  echo "   git init"
+  echo "❌ Not a git repo. Run: git init"
   exit 1
 fi
 
-# ── Cleanup stale submodule state (important) ────────────────────────────────
-if [ -d "${PROJECT_DIR}/.git/modules/.opencode-repo" ] && [ ! -d "${SUBMODULE_DIR}" ]; then
-  echo "🧹 Cleaning stale submodule metadata..."
-  rm -rf "${PROJECT_DIR}/.git/modules/.opencode-repo"
+# ── FULL CLEANUP (fix broken states) ─────────────────────────────────────────
+echo "🧹 Cleaning any broken submodule state..."
+
+# remove from git config
+git config --remove-section "submodule.${SUBMODULE_NAME}" 2>/dev/null || true
+
+# remove from .gitmodules
+if [ -f .gitmodules ]; then
+  git config -f .gitmodules --remove-section "submodule.${SUBMODULE_NAME}" 2>/dev/null || true
+fi
+
+# remove cached index
+git rm --cached "${SUBMODULE_NAME}" 2>/dev/null || true
+
+# remove module metadata
+rm -rf ".git/modules/${SUBMODULE_NAME}"
+
+# remove working dir if broken
+if [ -d "$SUBMODULE_DIR" ] && [ ! -d "$SUBMODULE_DIR/.git" ]; then
+  rm -rf "$SUBMODULE_DIR"
 fi
 
 # ── Add or update submodule ──────────────────────────────────────────────────
 if [ -d "${SUBMODULE_DIR}/.git" ]; then
   echo "📦 Submodule exists — updating..."
-  git submodule update --remote --merge
+  git -C "$SUBMODULE_DIR" fetch origin "$BRANCH"
+  git -C "$SUBMODULE_DIR" reset --hard "origin/$BRANCH"
 else
-  if [ -d "$SUBMODULE_DIR" ]; then
-    echo "❌ ${SUBMODULE_DIR} exists but is not a submodule. Aborting."
-    exit 1
-  fi
-
-  echo "⬇️  Adding submodule..."
-  git submodule add -b "$BRANCH" "$REPO_URL" "$SUBMODULE_DIR"
+  echo "⬇️ Adding submodule..."
+  git submodule add -b "$BRANCH" "$REPO_URL" "$SUBMODULE_NAME"
+  git submodule update --init --recursive
 fi
 
 # ── Symlink .opencode ────────────────────────────────────────────────────────
 if [ -L "$OPENCODE_LINK" ]; then
-  echo "🔗 Updating .opencode symlink..."
   ln -sf "${SUBMODULE_DIR}/.opencode" "$OPENCODE_LINK"
 elif [ -d "$OPENCODE_LINK" ]; then
-  echo "❌ ${OPENCODE_LINK} exists as a real directory. Aborting."
+  echo "❌ ${OPENCODE_LINK} exists as directory"
   exit 1
 else
-  echo "🔗 Creating .opencode symlink..."
   ln -s "${SUBMODULE_DIR}/.opencode" "$OPENCODE_LINK"
 fi
 
 # ── Symlink opencode.json ────────────────────────────────────────────────────
 if [ -L "$OPENCODE_JSON_LINK" ]; then
-  echo "🔗 Updating opencode.json symlink..."
   ln -sf "${SUBMODULE_DIR}/opencode.json" "$OPENCODE_JSON_LINK"
 elif [ -f "$OPENCODE_JSON_LINK" ]; then
-  echo "⚠️  Backing up existing opencode.json → opencode.json.bak"
   mv "$OPENCODE_JSON_LINK" "${OPENCODE_JSON_LINK}.bak"
   ln -s "${SUBMODULE_DIR}/opencode.json" "$OPENCODE_JSON_LINK"
 else
-  echo "🔗 Creating opencode.json symlink..."
   ln -s "${SUBMODULE_DIR}/opencode.json" "$OPENCODE_JSON_LINK"
 fi
 
 echo ""
 echo "✅ Done!"
-echo "   Submodule    : ${SUBMODULE_DIR}"
-echo "   .opencode    : ${OPENCODE_LINK} → ${SUBMODULE_DIR}/.opencode"
-echo "   opencode.json: ${OPENCODE_JSON_LINK} → ${SUBMODULE_DIR}/opencode.json"
 echo ""
-echo "💡 After cloning this repo elsewhere, run:"
+echo "💡 Clone users must run:"
 echo "   git submodule update --init --recursive"
 echo ""
-echo "💡 To update later:"
+echo "💡 Update later:"
 echo "   git submodule update --remote --merge"
