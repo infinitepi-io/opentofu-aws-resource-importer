@@ -3,13 +3,24 @@ set -euo pipefail
 
 REPO_URL="https://github.com/infinitepi-io/opentofu-aws-resource-importer.git"
 BRANCH="main"
-CLONE_DIR="${HOME}/.opentofu-aws-resource-importer"
 PROJECT_DIR="$(pwd)"
-OPENCODE_LINK="${PROJECT_DIR}/.opencode"
-OPENCODE_JSON_LINK="${PROJECT_DIR}/opencode.json"  # ← fixed: project root, not $HOME
 
+# ── Ask user where to clone ──────────────────────────────────────────────────
+DEFAULT_CLONE_DIR="${HOME}/.opentofu-aws-resource-importer"
 echo "🔧 Installing opentofu-aws-resource-importer..."
+echo ""
+read -rp "📁 Where should the repo be cloned? [${DEFAULT_CLONE_DIR}]: " USER_CLONE_DIR
+CLONE_DIR="${USER_CLONE_DIR:-$DEFAULT_CLONE_DIR}"
+# Expand ~ if user typed it manually
+CLONE_DIR="${CLONE_DIR/#\~/$HOME}"
+
+echo ""
 echo "   Project dir : ${PROJECT_DIR}"
+echo "   Clone dir   : ${CLONE_DIR}"
+echo ""
+
+OPENCODE_LINK="${PROJECT_DIR}/.opencode"
+OPENCODE_JSON_LINK="${PROJECT_DIR}/opencode.json"
 
 # ── Clone or update ──────────────────────────────────────────────────────────
 if [ -d "${CLONE_DIR}/.git" ]; then
@@ -48,7 +59,7 @@ fi
 
 echo ""
 echo "✅ Done!"
-echo "   Repo         : ${CLONE_DIR}  (git pull here to update)"
+echo "   Repo         : ${CLONE_DIR}"
 echo "   .opencode    : ${OPENCODE_LINK} → ${CLONE_DIR}/.opencode"
 echo "   opencode.json: ${OPENCODE_JSON_LINK} → ${CLONE_DIR}/opencode.json"
 echo ""
