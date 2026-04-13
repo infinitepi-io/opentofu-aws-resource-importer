@@ -4,12 +4,19 @@ set -euo pipefail
 REPO_URL="https://github.com/infinitepi-io/opentofu-aws-resource-importer.git"
 BRANCH="main"
 PROJECT_DIR="$(pwd)"
-
-# ── Ask user where to clone ──────────────────────────────────────────────────
 DEFAULT_CLONE_DIR="${HOME}/.opentofu-aws-resource-importer"
+
 echo "🔧 Installing opentofu-aws-resource-importer..."
 echo ""
-read -rp "📁 Where should the repo be cloned? [${DEFAULT_CLONE_DIR}]: " USER_CLONE_DIR
+
+# ── Ask user where to clone (only if interactive terminal) ──────────────────
+if [ -t 0 ]; then
+  read -rp "📁 Where should the repo be cloned? [${DEFAULT_CLONE_DIR}]: " USER_CLONE_DIR </dev/tty
+else
+  echo "📁 Non-interactive mode — using default clone dir: ${DEFAULT_CLONE_DIR}"
+  USER_CLONE_DIR=""
+fi
+
 CLONE_DIR="${USER_CLONE_DIR:-$DEFAULT_CLONE_DIR}"
 # Expand ~ if user typed it manually
 CLONE_DIR="${CLONE_DIR/#\~/$HOME}"
