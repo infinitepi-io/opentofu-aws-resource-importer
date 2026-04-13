@@ -6,9 +6,10 @@ BRANCH="main"
 CLONE_DIR="${HOME}/.opentofu-aws-resource-importer"
 PROJECT_DIR="$(pwd)"
 OPENCODE_LINK="${PROJECT_DIR}/.opencode"
-OPENCODE_JSON_LINK="${HOME}/opencode.json"
+OPENCODE_JSON_LINK="${PROJECT_DIR}/opencode.json"  # ← fixed: project root, not $HOME
 
 echo "🔧 Installing opentofu-aws-resource-importer..."
+echo "   Project dir : ${PROJECT_DIR}"
 
 # ── Clone or update ──────────────────────────────────────────────────────────
 if [ -d "${CLONE_DIR}/.git" ]; then
@@ -32,7 +33,7 @@ else
   ln -s "${CLONE_DIR}/.opencode" "$OPENCODE_LINK"
 fi
 
-# ── Symlink opencode.json to $HOME ───────────────────────────────────────────
+# ── Symlink opencode.json into project root ───────────────────────────────────
 if [ -L "$OPENCODE_JSON_LINK" ]; then
   echo "🔗 Updating opencode.json symlink..."
   ln -sf "${CLONE_DIR}/opencode.json" "$OPENCODE_JSON_LINK"
@@ -47,8 +48,8 @@ fi
 
 echo ""
 echo "✅ Done!"
-echo "   Repo     : ${CLONE_DIR}  (git pull here to update)"
-echo "   .opencode: ${OPENCODE_LINK} → ${CLONE_DIR}/.opencode"
+echo "   Repo         : ${CLONE_DIR}  (git pull here to update)"
+echo "   .opencode    : ${OPENCODE_LINK} → ${CLONE_DIR}/.opencode"
 echo "   opencode.json: ${OPENCODE_JSON_LINK} → ${CLONE_DIR}/opencode.json"
 echo ""
 echo "💡 To update later: git -C ${CLONE_DIR} pull"
