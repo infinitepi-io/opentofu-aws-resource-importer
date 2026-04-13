@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-REPO_URL="https://github.com/infinitepi-io/opentofu-aws-resource-importer.git"
+REPO_URL="git@github.com:infinitepi-io/opentofu-aws-resource-importer.git"
 BRANCH="main"
 TARGET_DIR=".opencode"
 
