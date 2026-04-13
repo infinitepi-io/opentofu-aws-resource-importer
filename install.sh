@@ -10,11 +10,10 @@ echo "🔧 Installing opentofu-aws-resource-importer..."
 echo ""
 
 # ── Ask user where to clone (only if interactive terminal) ──────────────────
-if [ -t 0 ]; then
-  read -rp "📁 Where should the repo be cloned? [${DEFAULT_CLONE_DIR}]: " USER_CLONE_DIR </dev/tty
+if [ -t 1 ] && [ -e /dev/tty ]; then
+  read -rp "📁 Where should the repo be cloned? [${DEFAULT_CLONE_DIR}]: " USER_CLONE_DIR </dev/tty || true
 else
-  echo "📁 Non-interactive mode — using default clone dir: ${DEFAULT_CLONE_DIR}"
-  USER_CLONE_DIR=""
+  echo "📁 Non-interactive mode — using default: ${DEFAULT_CLONE_DIR}"
 fi
 
 CLONE_DIR="${USER_CLONE_DIR:-$DEFAULT_CLONE_DIR}"
