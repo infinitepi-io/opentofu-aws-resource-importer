@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "permission": {
+    "bash": "deny"
+  },
+  "default_agent": "opentofu-dispatcher",
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "disable": true
+    },
+    "plan": {
+      "mode": "primary",
+      "disable": true
+    },
+    "opentofu-dispatcher": {
+      "mode": "primary"
+    }
+  }
+}
