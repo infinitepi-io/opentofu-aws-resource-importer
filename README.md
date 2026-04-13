@@ -1,5 +1,9 @@
 # OpenTofu AWS Resource Importer
 
+**Author:** Satish Tripathi  
+**Repository:** [opentofu-aws-resource-importer](https://github.com/infinitepi-io/opentofu-aws-resource-importer/tree/main)  
+**License:** Apache 2.0
+
 A powerful OpenCode skill and agent configuration for importing existing AWS resources into OpenTofu state with generated configuration.
 
 ## Features
@@ -29,15 +33,15 @@ This installs the OpenCode agents, commands, and skills configuration into your 
 ## Quick Start
 
 1. **Start OpenCode:**
+
    ```bash
    opencode
    ```
-
 2. **Run security scan:**
+
    ```bash
    > /security-scan
    ```
-
 3. **Import AWS resources** — Ask OpenCode to help import your existing AWS resources
 
 ## Project Structure
@@ -131,4 +135,4 @@ Apache License 2.0 - see [LICENSE](LICENSE) for details.
 
 ## Credits
 
-The [opentofu-skills](.opencode/skills/opentofu-skills/SKILL.md) is inspired by [Anton Babenko's terraform-skill](https://github.com/antonbabenko/terraform-skill).
+The [opentofu-skills](.opencode/skills/opentofu-skills/SKILL.md) is inspired by [Anton Babenko&#39;s terraform-skill](https://github.com/antonbabenko/terraform-skill).
