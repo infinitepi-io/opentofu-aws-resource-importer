@@ -11,20 +11,20 @@ A powerful OpenCode skill and agent configuration for importing existing AWS res
 
 ## Prerequisites
 
+- [OpenCode](https://opencode.ai/) CLI
 - [OpenTofu](https://opentofu.org/) >= 1.9.0
 - [AWS CLI](https://aws.amazon.com/cli/) configured with appropriate credentials
-- [OpenCode](https://opencode.ai/) CLI
 - [Docker](https://www.docker.com/) (for security scanning)
 
 ## Installation
 
-Run this command from your project directory:
+Run the install script from your project directory:
 
 ```bash
-git clone https://github.com/infinitepi-io/opentofu-aws-resource-importer.git .opencode
+curl -sSL https://raw.githubusercontent.com/infinitepi-io/opentofu-aws-resource-importer/main/install.sh | bash
 ```
 
-This clones the repository and places the `.opencode` folder directly in your current project directory.
+This installs the OpenCode agents, commands, and skills configuration into your project.
 
 ## Quick Start
 
@@ -51,7 +51,9 @@ This clones the repository and places the `.opencode` folder directly in your cu
 │   │   └── opentofu-skills/
 │   │       ├── SKILL.md       # Main skill file
 │   │       └── scripts/       # Helper scripts
-│   └── package.json           # OpenCode manifest
+│   ├── package.json           # OpenCode manifest
+│   └── ORIGIN                 # Source tracking
+├── opencode.json              # OpenCode project config
 ├── docs/                      # Documentation
 └── LICENSE                    # Apache 2.0 License
 ```
