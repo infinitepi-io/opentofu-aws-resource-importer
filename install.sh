@@ -24,6 +24,12 @@ if [ ! -d "${PROJECT_DIR}/.git" ]; then
   exit 1
 fi
 
+# ── Cleanup stale submodule state (important) ────────────────────────────────
+if [ -d "${PROJECT_DIR}/.git/modules/.opencode-repo" ] && [ ! -d "${SUBMODULE_DIR}" ]; then
+  echo "🧹 Cleaning stale submodule metadata..."
+  rm -rf "${PROJECT_DIR}/.git/modules/.opencode-repo"
+fi
+
 # ── Add or update submodule ──────────────────────────────────────────────────
 if [ -d "${SUBMODULE_DIR}/.git" ]; then
   echo "📦 Submodule exists — updating..."
