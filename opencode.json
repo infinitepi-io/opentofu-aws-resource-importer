@@ -15,7 +15,50 @@
       "disable": true
     },
     "opentofu-dispatcher": {
-      "mode": "primary"
+      "mode": "primary",
+      "permission": {
+        "bash": "deny",
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow"
+      }
+    },
+    "opentofu-coding": {
+      "mode": "primary",
+      "permission": {
+        "bash": {
+          "*": "deny",
+          "tofu fmt*": "allow",
+          "tofu init*": "allow",
+          "tofu validate*": "allow"
+        },
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "glob": "allow",
+        "grep": "allow"
+      }
+    },
+    "opentofu-security": {
+      "mode": "primary",
+      "permission": {
+        "bash": {
+          "*": "deny",
+          "checkov*": "allow",
+          "trivy*": "allow"
+        },
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow"
+      }
+    },
+    "aws-command-generator": {
+      "mode": "primary",
+      "permission": {
+        "bash": "deny",
+        "read": "allow",
+        "glob": "allow"
+      }
     }
   }
 }

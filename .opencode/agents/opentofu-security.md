@@ -1,6 +1,11 @@
 ---
 name: opentofu-security
 description: Reviews OpenTofu configurations for security issues, IAM patterns, compliance, and secrets management. Use for all security audit tasks.
+metadata:
+  author: Satish Tripathi
+  version: 1.0.0
+  opentofu_version: ">= 1.9.0"
+  source: https://github.com/infinitepi-io/opentofu-aws-resource-importer/tree/main
 tools:
   Read: true
   Glob: true

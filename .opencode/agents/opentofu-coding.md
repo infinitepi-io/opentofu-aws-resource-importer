@@ -1,6 +1,11 @@
 ---
 name: opentofu-coding
 description: Writes, reviews, refactors, and imports OpenTofu configurations and modules for this ECS deployment project. Use for all configuration authoring tasks.
+metadata:
+  author: Satish Tripathi
+  version: 1.0.0
+  opentofu_version: ">= 1.9.0"
+  source: https://github.com/infinitepi-io/opentofu-aws-resource-importer/tree/main
 tools:
   Read: true
   Write: true

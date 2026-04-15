@@ -5,6 +5,7 @@ metadata:
   author: Satish Tripathi
   version: 1.0.0
   opentofu_version: ">= 1.9.0"
+  source: https://github.com/infinitepi-io/opentofu-aws-resource-importer/tree/main
   credits: Inspired by [Anton Babenko's terraform-skill](https://github.com/antonbabenko/terraform-skill)
 ---
 # OpenTofu Skill

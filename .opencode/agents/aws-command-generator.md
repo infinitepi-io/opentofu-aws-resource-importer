@@ -1,6 +1,11 @@
 ---
 name: aws-command-generator
 description: Generates the AWS CLI commands needed to describe a resource and ask the user to run them. Collects the output, then returns structured resource data for opentofu-coding to write the configuration. Does NOT run commands itself. Does NOT write any .tofu files.
+metadata:
+  author: Satish Tripathi
+  version: 1.0.0
+  opentofu_version: ">= 1.9.0"
+  source: https://github.com/infinitepi-io/opentofu-aws-resource-importer/tree/main
 tools:
   Bash: true
   mcp__awslabs-ccapi__get_resource_schema: true
