@@ -7,6 +7,12 @@ BRANCH="main"
 TEMP_DIR=$(mktemp -d)
 CLONE_DATE=$(date +%Y-%m-%d)
 
+cleanup() {
+  rm -rf "$TEMP_DIR"
+}
+
+trap cleanup EXIT
+
 echo "Installing opentofu-aws-resource-importer..."
 
 # Clone to temp directory
@@ -20,8 +26,5 @@ cp "$TEMP_DIR/opencode.json" .
 if [ -f .opencode/ORIGIN ]; then
   sed -i "s/Clone date:.*/Clone date: ${CLONE_DATE}/" .opencode/ORIGIN
 fi
-
-# Cleanup
-rm -rf "$TEMP_DIR"
 
 echo "Done! OpenCode configuration installed."
